@@ -23,5 +23,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src/**/*"],
+  "baseUrl": ".", // ou "src", conforme a estrutura do seu projeto
+  "paths": {
+    "@/*": ["./src/*"],
+    "@components/*": ["./src/components/*"]
+  }
 }
