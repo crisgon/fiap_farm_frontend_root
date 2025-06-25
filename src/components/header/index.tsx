@@ -1,46 +1,51 @@
 import { Link } from "react-router";
 
+import { HandCoins, House, Package, Tractor, LeafyGreen } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "../../components/ui/navigation-menu";
-
-import { Avatar, AvatarFallback } from "../../components/ui/avatar";
-import { Tractor } from "lucide-react";
+} from "@/components/ui/navigation-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export function Header() {
   return (
-    <header className="w-full">
-      <div className="flex items-center justify-between max-w-[900px] m-auto">
-        <Tractor />
+    <header className="w-full bg-primary">
+      <div className="flex items-center justify-between max-w-5xl m-auto">
+        <h1 className="font-bold text-white">Fiap Farm</h1>
         <NavigationMenu viewport={false} className="m-auto p-4">
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                asChild
-                className={navigationMenuTriggerStyle()}
-              >
-                <Link to="/">Home</Link>
-              </NavigationMenuLink>
+          <NavigationMenuList className="gap-12">
+            <NavigationMenuItem className="text-white hover:text-black">
+              <Link className="flex flex-row items-center gap-4" to="/">
+                <House className="text-inherit" /> Home
+              </Link>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                asChild
-                className={navigationMenuTriggerStyle()}
+            <NavigationMenuItem className="text-white hover:text-black">
+              <Link
+                className="flex flex-row items-center gap-4"
+                to="/inventory/products"
               >
-                <Link to="/inventory">Estoque</Link>
-              </NavigationMenuLink>
+                <LeafyGreen className="text-inherit" /> Produtos
+              </Link>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                asChild
-                className={navigationMenuTriggerStyle()}
+
+            <NavigationMenuItem className="text-white hover:text-black">
+              <Link className="flex flex-row items-center gap-4" to="/">
+                <Tractor className="text-inherit" /> Produção
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem className="text-white hover:text-black">
+              <Link
+                className="flex flex-row items-center gap-4"
+                to="/inventory"
               >
-                <Link to="/sales">Vendas</Link>
-              </NavigationMenuLink>
+                <Package className="text-inherit" /> Estoque
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem className="text-white hover:text-black">
+              <Link className="flex flex-row items-center gap-4" to="/sales">
+                <HandCoins className="text-inherit" /> Vendas
+              </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>

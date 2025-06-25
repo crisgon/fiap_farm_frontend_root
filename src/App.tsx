@@ -1,9 +1,13 @@
 import { Routes, Route } from "react-router";
-import "./App.css";
-import AnalyticsApp from "analytics/App";
-import InventoryApp from "inventory/App";
 
-import SalesApp from "sales/App";
+import { Home as AnalyticsHome } from "analytics/modules";
+
+import {
+  Home as InventoryHome,
+  Products as InventoryProducts,
+} from "inventory/modules";
+
+import { Home as SalesHome } from "sales/modules";
 
 import { Header } from "./components/header";
 
@@ -13,9 +17,11 @@ function App() {
       <Header />
 
       <Routes>
-        <Route path="/" element={<AnalyticsApp />} />
-        <Route path="/sales" element={<SalesApp />} />
-        <Route path="/inventory" element={<InventoryApp />} />
+        <Route path="/" element={<AnalyticsHome />} />
+        <Route path="/sales" element={<SalesHome />} />
+        <Route path="/inventory" element={<InventoryHome />} />
+
+        <Route path="/inventory/products" element={<InventoryProducts />} />
       </Routes>
     </>
   );

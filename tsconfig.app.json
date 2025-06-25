@@ -21,12 +21,11 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src/**/*"],
-  "baseUrl": ".", // ou "src", conforme a estrutura do seu projeto
-  "paths": {
-    "@/*": ["./src/*"],
-    "@components/*": ["./src/components/*"]
-  }
+  "include": ["src"]
 }
