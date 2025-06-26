@@ -1,13 +1,29 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router";
 
-import { Home as AnalyticsHome } from "analytics/modules";
+const AnalyticsHome = lazy(() =>
+  import("analytics/modules").then((module) => ({
+    default: module.default.Home,
+  }))
+);
 
-import {
-  Home as InventoryHome,
-  Products as InventoryProducts,
-} from "inventory/modules";
+const SalesHome = lazy(() =>
+  import("sales/modules").then((module) => ({
+    default: module.default.Home,
+  }))
+);
 
-import { Home as SalesHome } from "sales/modules";
+const InventoryHome = lazy(() =>
+  import("inventory/modules").then((module) => ({
+    default: module.default.Home,
+  }))
+);
+
+const InventoryProducts = lazy(() =>
+  import("inventory/modules").then((module) => ({
+    default: module.default.Products,
+  }))
+);
 
 import { Header } from "./components/header";
 
@@ -16,13 +32,15 @@ function App() {
     <>
       <Header />
 
-      <Routes>
-        <Route path="/" element={<AnalyticsHome />} />
-        <Route path="/sales" element={<SalesHome />} />
-        <Route path="/inventory" element={<InventoryHome />} />
+      <Suspense fallback="Carregando...">
+        <Routes>
+          <Route path="/" element={<AnalyticsHome />} />
+          <Route path="/sales" element={<SalesHome />} />
+          <Route path="/inventory" element={<InventoryHome />} />
 
-        <Route path="/inventory/products" element={<InventoryProducts />} />
-      </Routes>
+          <Route path="/inventory/products" element={<InventoryProducts />} />
+        </Routes>
+      </Suspense>
     </>
   );
 }
