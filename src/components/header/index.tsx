@@ -7,8 +7,11 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useAppSelector } from "@/stores/redux/hooks";
 
 export function Header() {
+  const { user } = useAppSelector((state) => state.auth);
+
   return (
     <header className="w-full bg-primary">
       <div className="flex items-center justify-between max-w-5xl m-auto">
@@ -50,7 +53,9 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
         <Avatar>
-          <AvatarFallback>C</AvatarFallback>
+          <AvatarFallback>
+            {(user?.displayName ?? user?.email)?.split("")[0]}
+          </AvatarFallback>
         </Avatar>
       </div>
     </header>
