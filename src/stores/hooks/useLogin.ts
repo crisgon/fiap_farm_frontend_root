@@ -11,7 +11,6 @@ export function useLogin() {
     try {
       const { userCredential } = await signInUser(email, password);
       dispatch(setUser(userCredential.user));
-      localStorage.setItem("user", JSON.stringify(userCredential.user));
       navigate("/home");
     } catch {
       console.log({

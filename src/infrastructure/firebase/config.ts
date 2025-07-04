@@ -5,7 +5,6 @@ import {
   getAuth,
   initializeAuth,
   browserLocalPersistence,
-  setPersistence,
 } from "firebase/auth";
 
 import { Firestore, getFirestore } from "firebase/firestore";
@@ -29,15 +28,13 @@ class FirebaseService {
   private constructor() {
     if (!getApps().length) {
       this.app = initializeApp(firebaseConfig);
-      this.auth = initializeAuth(this.app, {});
+      this.auth = initializeAuth(this.app, {
+        persistence: browserLocalPersistence,
+      });
     } else {
       this.app = getApp();
       this.auth = getAuth(this.app);
     }
-
-    setPersistence(this.auth, browserLocalPersistence).catch((error) => {
-      console.error("Erro ao salvar dados no localstorage:", error);
-    });
 
     this.db = getFirestore(this.app);
     this.storage = getStorage(this.app);

@@ -1,6 +1,13 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { Routes, Route, useLocation } from "react-router";
+import { Routes, Route, useLocation, useNavigate } from "react-router";
+import { Header } from "./components/header";
+import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Login } from "./modules/auth/login";
+import { setUser } from "./stores/redux/slices/authSlice";
+import { firebase } from "./infrastructure/firebase/config";
+import { useAppDispatch } from "./stores/redux/hooks";
+import Spinner from "./components/spinner";
 
 const AnalyticsHome = lazy(() =>
   import("analytics/modules").then((module) => ({
@@ -25,12 +32,6 @@ const InventoryProducts = lazy(() =>
     default: module.default.Products,
   }))
 );
-
-import { Header } from "./components/header";
-
-import { Alert, AlertTitle } from "@/components/ui/alert";
-
-import { Login } from "./modules/auth/login";
 
 function ModuleErrorFallback() {
   return (
@@ -71,6 +72,33 @@ function LoggedArea({ children }: { children: React.JSX.Element }) {
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const unsubscribe = firebase.auth.onAuthStateChanged((firebaseUser) => {
+      if (firebaseUser) {
+        dispatch(setUser(firebaseUser));
+        setIsLoading(false);
+      } else {
+        setUser(null);
+        navigate("/login");
+      }
+    });
+
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-[100vh] flex items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <>
       <Suspense fallback={<SuspenseFallback />}>
