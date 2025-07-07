@@ -81,8 +81,10 @@ function App() {
       if (firebaseUser) {
         dispatch(setUser(firebaseUser));
         setIsLoading(false);
+        navigate("/home");
       } else {
         setUser(null);
+        setIsLoading(false);
         navigate("/login");
       }
     });
