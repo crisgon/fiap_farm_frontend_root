@@ -1,21 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /// <reference types="vite/client" />
 
-declare module "analytics/modules" {
+declare module "inventory/App" {
   import { FC } from "react";
 
-  export const Home: FC<any>;
+  export const App: FC<any>;
 }
 
-declare module "inventory/modules" {
+declare module "analytics/App" {
   import { FC } from "react";
 
-  export const Home: FC<any>;
-  export const Products: FC<any>;
+  export const App: FC<any>;
 }
 
-declare module "sales/modules" {
+declare module "sales/App" {
   import { FC } from "react";
 
-  export const Home: FC<any>;
+  export const App: FC<any>;
 }

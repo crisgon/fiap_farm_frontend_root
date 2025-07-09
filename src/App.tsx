@@ -1,36 +1,33 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { Routes, Route, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/header";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Login } from "./modules/auth/login";
 import { setUser } from "./stores/redux/slices/authSlice";
 import { firebase } from "./infrastructure/firebase/config";
-import { useAppDispatch } from "./stores/redux/hooks";
+import { useAppDispatch, useAppSelector } from "./stores/redux/hooks";
 import Spinner from "./components/spinner";
 
-const AnalyticsHome = lazy(() =>
-  import("analytics/modules").then((module) => ({
-    default: module.default.Home,
+const AnalyticsApp = lazy(() =>
+  import("analytics/App").then((module) => ({
+    default: module.default.App,
   }))
 );
 
-const SalesHome = lazy(() =>
-  import("sales/modules").then((module) => ({
-    default: module.default.Home,
+const SalesApp = lazy(() =>
+  import("sales/App").then((module) => ({
+    default: module.default.App,
   }))
 );
 
-const InventoryHome = lazy(() =>
-  import("inventory/modules").then((module) => ({
-    default: module.default.Home,
-  }))
-);
-
-const InventoryProducts = lazy(() =>
-  import("inventory/modules").then((module) => ({
-    default: module.default.Products,
-  }))
+const InventoryApp = lazy(() =>
+  import("inventory/App").then((module) => {
+    return {
+      default: module.default.App,
+    };
+  })
 );
 
 function ModuleErrorFallback() {
@@ -74,12 +71,14 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const unsubscribe = firebase.auth.onAuthStateChanged((firebaseUser) => {
       if (firebaseUser) {
         dispatch(setUser(firebaseUser));
+
         setIsLoading(false);
         navigate("/home");
       } else {
@@ -89,7 +88,9 @@ function App() {
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -111,35 +112,26 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route
-              path="/home"
+              path="/*"
               element={
                 <LoggedArea>
-                  <AnalyticsHome />
+                  <AnalyticsApp user={user} />
                 </LoggedArea>
               }
             />
             <Route
-              path="/sales"
+              path="/sales/*"
               element={
                 <LoggedArea>
-                  <SalesHome />
+                  <SalesApp user={user} />
                 </LoggedArea>
               }
             />
             <Route
-              path="/inventory"
+              path="/inventory/*"
               element={
                 <LoggedArea>
-                  <InventoryHome />
-                </LoggedArea>
-              }
-            />
-
-            <Route
-              path="/inventory/products"
-              element={
-                <LoggedArea>
-                  <InventoryProducts />
+                  <InventoryApp user={user} />
                 </LoggedArea>
               }
             />

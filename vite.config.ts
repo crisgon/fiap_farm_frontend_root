@@ -22,10 +22,14 @@ export default defineConfig({
           process.env.SALES_REMOTE_URL ??
           "http://localhost:5003/assets/remoteEntry.js",
       },
-      exposes: {
-        "./firebase": "./src/infrastructure/firebase/config.ts",
-      },
-      shared: ["react", "react-dom"],
+
+      shared: [
+        "react",
+        "react-dom",
+        "react-router-dom",
+        "react-redux",
+        "tailwindcss",
+      ],
     }),
   ],
   resolve: {

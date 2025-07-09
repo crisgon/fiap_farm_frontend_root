@@ -33,7 +33,10 @@ export function Header() {
             </NavigationMenuItem>
 
             <NavigationMenuItem className="text-white hover:text-black">
-              <Link className="flex flex-row items-center gap-4" to="/">
+              <Link
+                className="flex flex-row items-center gap-4"
+                to="/inventory/orders"
+              >
                 <Tractor className="text-inherit" /> Produção
               </Link>
             </NavigationMenuItem>

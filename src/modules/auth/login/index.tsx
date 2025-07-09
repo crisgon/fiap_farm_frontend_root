@@ -32,7 +32,7 @@ export function Login() {
         <CardTitle>Fiap Farm - Login</CardTitle>
         <form onSubmit={submitForm} className="flex flex-col gap-4">
           <Input type="email" placeholder="Email" id="email" />
-          <Input type="password" placeholder="Email" id="password" />
+          <Input type="password" placeholder="Senha" id="password" />
           <Button type="submit">Entrar</Button>
         </form>
       </Card>
