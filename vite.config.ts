@@ -29,6 +29,7 @@ export default defineConfig({
         "react-router-dom",
         "react-redux",
         "tailwindcss",
+        "@tanstack/react-query",
       ],
     }),
   ],
