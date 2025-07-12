@@ -8,9 +8,17 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAppSelector } from "@/stores/redux/hooks";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { useLogout } from "@/stores/hooks/useLogout";
 
 export function Header() {
   const { user } = useAppSelector((state) => state.auth);
+  const { handleLogout } = useLogout();
 
   return (
     <header className="w-full bg-primary">
@@ -55,11 +63,19 @@ export function Header() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <Avatar>
-          <AvatarFallback>
-            {(user?.displayName ?? user?.email)?.split("")[0]}
-          </AvatarFallback>
-        </Avatar>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Avatar>
+              <AvatarFallback>
+                {(user?.displayName ?? user?.email)?.split("")[0]}
+              </AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56" align="start">
+            <DropdownMenuItem onClick={handleLogout}>Sair</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
