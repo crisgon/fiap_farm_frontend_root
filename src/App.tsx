@@ -9,6 +9,7 @@ import { setUser } from "./stores/redux/slices/authSlice";
 import { firebase } from "./infrastructure/firebase/config";
 import { useAppDispatch, useAppSelector } from "./stores/redux/hooks";
 import Spinner from "./components/spinner";
+import { Register } from "./modules/auth/register";
 
 const AnalyticsApp = lazy(() =>
   import("analytics/App").then((module) => ({
@@ -84,7 +85,7 @@ function App() {
       } else {
         setUser(null);
         setIsLoading(false);
-        navigate("/login");
+        navigate(location.pathname === "/register" ? "/register" : "/login");
       }
     });
 
@@ -111,6 +112,7 @@ function App() {
         >
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route
               path="/*"
               element={
