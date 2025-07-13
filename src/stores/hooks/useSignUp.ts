@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { signUpUser } from "@/domain/usecases/AuthUseCases";
 import { authApi } from "@/infrastructure/api/AuthApi";
+import { toast } from "sonner";
 
 export function useSignUp() {
   const navigate = useNavigate();
@@ -16,11 +17,7 @@ export function useSignUp() {
 
       navigate("/login");
     } catch {
-      console.log({
-        type: "error",
-        text1: "Falha ao cadastrar usuário",
-        position: "bottom",
-      });
+      toast.error("Falha ao cadastrar usuário");
     }
   };
 

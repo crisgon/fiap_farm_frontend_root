@@ -3,6 +3,7 @@ import { useAppDispatch } from "../redux/hooks";
 import { setUser } from "../redux/slices/authSlice";
 import { logoutUser } from "@/domain/usecases/AuthUseCases";
 import { authApi } from "@/infrastructure/api/AuthApi";
+import { toast } from "sonner";
 
 export function useLogout() {
   const dispatch = useAppDispatch();
@@ -14,11 +15,7 @@ export function useLogout() {
       dispatch(setUser(null));
       navigate("/login");
     } catch {
-      console.log({
-        type: "error",
-        text1: "Falha ao deslogar usuário",
-        position: "bottom",
-      });
+      toast.error("Falha ao deslogar usuário");
     }
   };
 
