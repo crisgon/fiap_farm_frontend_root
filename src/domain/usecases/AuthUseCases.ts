@@ -1,17 +1,16 @@
-import { authApi } from "@/infrastructure/api/AuthApi";
+import type { AuthRepository } from "../repositories/AuthRepository";
 
-export const signInUser = async (email: string, password: string) => {
-  return await authApi.signInUser(email, password);
-};
+export const signInUser =
+  (authRepo: AuthRepository) => async (email: string, password: string) => {
+    return await authRepo.signInUser(email, password);
+  };
 
-export const signUpUser = async (
-  email: string,
-  password: string,
-  userName: string
-) => {
-  return await authApi.signUpUser(email, password, userName);
-};
+export const signUpUser =
+  (authRepo: AuthRepository) =>
+  async (email: string, password: string, userName: string) => {
+    return await authRepo.signUpUser(email, password, userName);
+  };
 
-export const logoutUser = async () => {
-  return await authApi.logoutUser();
+export const logoutUser = async (authRepo: AuthRepository) => {
+  return await authRepo.logoutUser();
 };
