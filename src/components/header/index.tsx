@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-import { HandCoins, House, Package, Tractor, LeafyGreen } from "lucide-react";
+import { HandCoins, House, Package, LeafyGreen } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -40,14 +40,6 @@ export function Header() {
               </Link>
             </NavigationMenuItem>
 
-            <NavigationMenuItem className="text-white hover:text-black">
-              <Link
-                className="flex flex-row items-center gap-4"
-                to="/inventory/orders"
-              >
-                <Tractor className="text-inherit" /> Produção
-              </Link>
-            </NavigationMenuItem>
             <NavigationMenuItem className="text-white hover:text-black">
               <Link
                 className="flex flex-row items-center gap-4"
